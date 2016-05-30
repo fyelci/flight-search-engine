@@ -1,9 +1,17 @@
+<uib-alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.closeAlert($index)">{{alert.msg}}</uib-alert>
+
 <div class="row main-header">
     <h1>Flight Search Engine</h1>
 </div>
 
 <div class="row main-flight-container">
   <div id="search-fitlers" class="col-md-3 col-sm-6 col-xs-12 filter-bar" >
+    <div class="row filter-direction-selection">
+      <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li><a ng-click="vm.directionSelected(false)" href="javascript:void(0)" data-toggle="tab">One way</a></li>
+        <li class="active"><a ng-click="vm.directionSelected(true)" href="javascript:void(0)" data-toggle="tab">Return</a></li>
+      </ul>
+    </div>
     <div id="date-airport-filter" class="row date-airport-filter">
       <div class="form-group">
         <label for="selFrom">From</label>
@@ -102,18 +110,22 @@
         <div>Arrive: {{flight.departureFlight.arrivalDate | date : 'hh:mm a'}}</div>
       </div>
       <div class="col-md-2 col-sm-3 col-xs-3">
-        <span class="flight-number">{{flight.returnFlight.flightNumber}}</span>
-        <div>{{flight.returnFlight.fromAirportCode}} > {{flight.returnFlight.toAirportCode}}</div>
-        <div>Depart: {{flight.returnFlight.departureDate | date : 'hh:mm a'}}</div>
-        <div>Arrive: {{flight.returnFlight.arrivalDate | date : 'hh:mm a'}}</div>
+        <div ng-if="flight.returnFlight">
+          <span class="flight-number">{{flight.returnFlight.flightNumber}}</span>
+          <div>{{flight.returnFlight.fromAirportCode}} > {{flight.returnFlight.toAirportCode}}</div>
+          <div>Depart: {{flight.returnFlight.departureDate | date : 'hh:mm a'}}</div>
+          <div>Arrive: {{flight.returnFlight.arrivalDate | date : 'hh:mm a'}}</div>
+        </div>
       </div>
       <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block">
         {{flight.departureFlight.currency}}{{flight.departureFlight.price + flight.returnFlight.price}}
       </div>
       <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block">
-        <button class="btn btn-default" type="button">Select This Flight</button>
+        <button ng-click="vm.selectUnselectFlight($index)" ng-if="!flight.isSelected" class="btn btn-default btn-primary" type="button">Select This Flight</button>
+        <button ng-click="vm.selectUnselectFlight($index)" ng-if="flight.isSelected" class="btn btn-default btn-danger" type="button">Unselect</button>
       </div>
     </div>
   </div>
 
 </div>
+
