@@ -1,0 +1,119 @@
+<div class="row main-header">
+    <h1>Flight Search Engine</h1>
+</div>
+
+<div class="row main-flight-container">
+  <div id="search-fitlers" class="col-md-3 col-sm-6 col-xs-12 filter-bar" >
+    <div id="date-airport-filter" class="row date-airport-filter">
+      <div class="form-group">
+        <label for="selFrom">From</label>
+        <select class="form-control"
+                id="selFrom"
+                ng-options="airport as airport.name for airport in vm.fromAirportList"
+                ng-model="vm.filters.airports.from"
+                ng-change="vm.fromAirportSelected()">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="selDest">Destination</label>
+        <select class="form-control"
+                id="selDest"
+                ng-options="airport as airport.name for airport in vm.toAirportList"
+                ng-model="vm.filters.airports.to"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="departDate">Departure Date</label>
+        <p class="input-group">
+          <input type="text"
+                 class="form-control"
+                 id="departureDateSelection"
+                 uib-datepicker-popup
+                 ng-model="vm.filters.departure.date"
+                 is-open="vm.filters.departure.datePopupOpened"
+                 datepicker-options="vm.departureDateOptions"
+                 ng-required="true"
+                 close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="vm.openDepartureDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label for="returnDate">Return Date</label>
+        <p class="input-group">
+          <input type="text"
+                 id="returnDateSelection"
+                 class="form-control"
+                 uib-datepicker-popup
+                 ng-model="vm.filters.return.date"
+                 is-open="vm.filters.return.datePopupOpened"
+                 datepicker-options="vm.returnDateOptions"
+                 ng-required="true"
+                 close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="vm.openReturnDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+
+        <div class="form-group">
+          <label for="passenger-count">Passengers</label>
+          <select class="form-control"
+                  id="passenger-count"
+                  ng-options="passenger as passenger for passenger in vm.passengerSelectItems"
+                  ng-model="vm.filters.passengerCount"></select>
+        </div>
+
+        <div class="center-block text-center">
+          <button class="btn btn-default" type="button" ng-click="vm.searchFlights()">Search</button>
+        </div>
+
+      </div>
+
+    </div>
+    <div id="price-slider-filter-row" class="row price-filter">
+      Price Filter
+    </div>
+  </div>
+
+  <div id="search-results-main-container" class="col-md-9 col-sm-6 col-xs-12 search-results-main">
+    <div class="row search-results-header">
+      <div class="col-xs-6">
+        <h3>Your Results</h3>
+      </div>
+      <div class="col-xs-6 pull-right">
+        <p>Depart: {{vm.filters.departure.date | date : 'd MMM yyyy'}}</p>
+        <p>Return: {{vm.filters.return.date | date : 'd MMM yyyy'}}</p>
+      </div>
+    </div>
+    <div class="row no-results-bar" ng-if="vm.flightResults.length == 0">
+      <p>No flight found, please check your filter!</p>
+    </div>
+    <div class="row result-row" ng-repeat="flight in vm.flightResults">
+      <div class="col-md-3 col-sm-3 col-xs-3 center-block">
+        <img class="img-responsive" ng-src="{{flight.departureFlight.companyLogo}}" alt="{{flight.departureFlight.company}}" />
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-3">
+        <span class="flight-number">{{flight.departureFlight.flightNumber}}</span>
+        <div>{{flight.departureFlight.fromAirportCode}} > {{flight.departureFlight.toAirportCode}}</div>
+        <div>Depart: {{flight.departureFlight.departureDate | date : 'hh:mm a'}}</div>
+        <div>Arrive: {{flight.departureFlight.arrivalDate | date : 'hh:mm a'}}</div>
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-3">
+        <span class="flight-number">{{flight.returnFlight.flightNumber}}</span>
+        <div>{{flight.returnFlight.fromAirportCode}} > {{flight.returnFlight.toAirportCode}}</div>
+        <div>Depart: {{flight.returnFlight.departureDate | date : 'hh:mm a'}}</div>
+        <div>Arrive: {{flight.returnFlight.arrivalDate | date : 'hh:mm a'}}</div>
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block">
+        {{flight.departureFlight.currency}}{{flight.departureFlight.price + flight.returnFlight.price}}
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block">
+        <button class="btn btn-default" type="button">Select This Flight</button>
+      </div>
+    </div>
+  </div>
+
+</div>
