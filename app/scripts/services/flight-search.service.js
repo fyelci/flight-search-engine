@@ -27,8 +27,8 @@
       return $http.get('data/flights.json').success(function(data) {
           var airportData = [];
           for (var i=0; i<data.flights.length; i++) {
-            if(fromAirport.code === data.flights[i].fromAirportCode
-                && _.findIndex(airportData, {code : data.flights[i].toAirportCode}) < 0) {
+            if(fromAirport.code === data.flights[i].fromAirportCode &&
+              _.findIndex(airportData, {code : data.flights[i].toAirportCode}) < 0) {
               airportData.push({
                 code: data.flights[i].toAirportCode,
                 name: data.flights[i].toAirport,
@@ -47,10 +47,10 @@
         for (var i=0; i<data.flights.length; i++) {
           var departureDate = new Date(data.flights[i].departureDate);
 
-          if(data.flights[i].fromAirportCode === filters.airports.from.code
-              && data.flights[i].toAirportCode === filters.airports.to.code
-              && departureDate.sameDay(filters.departure.date)
-              && filters.passengerCount <= data.flights[i].remainingTickets) {
+          if(data.flights[i].fromAirportCode === filters.airports.from.code &&
+            data.flights[i].toAirportCode === filters.airports.to.code &&
+            departureDate.sameDay(filters.departure.date) &&
+            filters.passengerCount <= data.flights[i].remainingTickets) {
             flightData.push({
               departureFlight: getConvertedObj(data.flights[i])
             });
@@ -62,10 +62,11 @@
           for (var i=0; i<data.flights.length; i++) {
             var departureDate = new Date(data.flights[i].departureDate);
 
-            if(data.flights[i].toAirportCode === filters.airports.from.code
-              && data.flights[i].fromAirportCode === filters.airports.to.code
-              && departureDate.sameDay(filters.return.date)
-              && filters.passengerCount <= data.flights[i].remainingTickets) {
+            if(data.flights[i].toAirportCode === filters.airports.from.code &&
+              data.flights[i].fromAirportCode === filters.airports.to.code &&
+              departureDate.sameDay(filters.return.date) &&
+              filters.passengerCount <= data.flights[i].remainingTickets) {
+
               for(var j=0; j < flightData.length; j++) {
                 flightData[j].returnFlight = getConvertedObj(data.flights[i]);
               }

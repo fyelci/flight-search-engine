@@ -107,14 +107,18 @@
       if(vm.filters.isRoundTrip && !vm.filters.return.date) {
         vm.alerts.push({type: 'warning', msg: 'You should choose return date for return flight!'});
       }
-    };
+    }
 
     vm.selectUnselectFlight = function (index) {
       vm.flightResults[index].isSelected =!vm.flightResults[index].isSelected;
     };
 
     vm.directionSelected = function(isRoundTrip) {
-      vm.isRoundTrip = isRoundTrip;
+      vm.filters.isRoundTrip = isRoundTrip;
+    };
+
+    vm.closeAlert = function(index) {
+      vm.alerts.splice(index, 1);
     };
 
 

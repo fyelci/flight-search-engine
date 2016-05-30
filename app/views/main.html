@@ -17,7 +17,7 @@
         <label for="selFrom">From</label>
         <select class="form-control"
                 id="selFrom"
-                ng-options="airport as airport.name for airport in vm.fromAirportList"
+                ng-options="airport as airport.name + ' (' + airport.code + ')' for airport in vm.fromAirportList"
                 ng-model="vm.filters.airports.from"
                 ng-change="vm.fromAirportSelected()">
         </select>
@@ -27,7 +27,7 @@
         <label for="selDest">Destination</label>
         <select class="form-control"
                 id="selDest"
-                ng-options="airport as airport.name for airport in vm.toAirportList"
+                ng-options="airport as airport.name + ' (' + airport.code + ')' for airport in vm.toAirportList"
                 ng-model="vm.filters.airports.to"></select>
       </div>
 
@@ -49,7 +49,7 @@
         </p>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" ng-show="vm.filters.isRoundTrip">
         <label for="returnDate">Return Date</label>
         <p class="input-group">
           <input type="text"
@@ -65,19 +65,18 @@
             <button type="button" class="btn btn-default" ng-click="vm.openReturnDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
           </span>
         </p>
+      </div>
 
-        <div class="form-group">
-          <label for="passenger-count">Passengers</label>
-          <select class="form-control"
-                  id="passenger-count"
-                  ng-options="passenger as passenger for passenger in vm.passengerSelectItems"
-                  ng-model="vm.filters.passengerCount"></select>
-        </div>
+      <div class="form-group">
+        <label for="passenger-count">Passengers</label>
+        <select class="form-control"
+                id="passenger-count"
+                ng-options="passenger as passenger for passenger in vm.passengerSelectItems"
+                ng-model="vm.filters.passengerCount"></select>
+      </div>
 
-        <div class="center-block text-center">
-          <button class="btn btn-default" type="button" ng-click="vm.searchFlights()">Search</button>
-        </div>
-
+      <div class="center-block text-center">
+        <button class="btn btn-default" type="button" ng-click="vm.searchFlights()">Search</button>
       </div>
 
     </div>
@@ -91,9 +90,9 @@
       <div class="col-xs-6">
         <h3>Your Results</h3>
       </div>
-      <div class="col-xs-6 pull-right">
-        <p>Depart: {{vm.filters.departure.date | date : 'd MMM yyyy'}}</p>
-        <p>Return: {{vm.filters.return.date | date : 'd MMM yyyy'}}</p>
+      <div class="col-xs-6 pull-right user-selected-dates">
+        <div ng-show="vm.flightResults.length > 0">Depart: {{vm.filters.departure.date | date : 'd MMM yyyy'}}</div>
+        <div ng-show="vm.flightResults.length > 0 && vm.flightResults[0].returnFlight">Return: {{vm.filters.return.date | date : 'd MMM yyyy'}}</div>
       </div>
     </div>
     <div class="row no-results-bar" ng-if="vm.flightResults.length == 0">
@@ -103,24 +102,24 @@
       <div class="col-md-3 col-sm-3 col-xs-3 center-block">
         <img class="img-responsive" ng-src="{{flight.departureFlight.companyLogo}}" alt="{{flight.departureFlight.company}}" />
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-3">
+      <div class="col-md-2 col-sm-3 col-xs-3 result-text-column">
         <span class="flight-number">{{flight.departureFlight.flightNumber}}</span>
-        <div>{{flight.departureFlight.fromAirportCode}} > {{flight.departureFlight.toAirportCode}}</div>
-        <div>Depart: {{flight.departureFlight.departureDate | date : 'hh:mm a'}}</div>
-        <div>Arrive: {{flight.departureFlight.arrivalDate | date : 'hh:mm a'}}</div>
+        <div class="from-to">{{flight.departureFlight.fromAirportCode}} > {{flight.departureFlight.toAirportCode}}</div>
+        <div class="col-xs-6">Depart:</div><div class="col-xs-6">{{flight.departureFlight.departureDate | date : 'hh:mm a'}}</div>
+        <div class="col-xs-6">Arrive:</div><div class="col-xs-6">{{flight.departureFlight.arrivalDate | date : 'hh:mm a'}}</div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-3">
+      <div class="col-md-2 col-sm-3 col-xs-3 result-text-column">
         <div ng-if="flight.returnFlight">
           <span class="flight-number">{{flight.returnFlight.flightNumber}}</span>
-          <div>{{flight.returnFlight.fromAirportCode}} > {{flight.returnFlight.toAirportCode}}</div>
-          <div>Depart: {{flight.returnFlight.departureDate | date : 'hh:mm a'}}</div>
-          <div>Arrive: {{flight.returnFlight.arrivalDate | date : 'hh:mm a'}}</div>
+          <div class="from-to">{{flight.returnFlight.fromAirportCode}} > {{flight.returnFlight.toAirportCode}}</div>
+          <div class="col-xs-6">Depart:</div><div class="col-xs-6">{{flight.returnFlight.departureDate | date : 'hh:mm a'}}</div>
+        <div class="col-xs-6">Arrive:</div><div class="col-xs-6">{{flight.returnFlight.arrivalDate | date : 'hh:mm a'}}</div>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block">
-        {{flight.departureFlight.currency}}{{flight.departureFlight.price + flight.returnFlight.price}}
+      <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block total-price">
+        {{flight.departureFlight.currency}} {{flight.departureFlight.price + flight.returnFlight.price}}
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block">
+      <div class="col-md-3 col-sm-3 col-xs-3 text-center center-block select-flight-buttons">
         <button ng-click="vm.selectUnselectFlight($index)" ng-if="!flight.isSelected" class="btn btn-default btn-primary" type="button">Select This Flight</button>
         <button ng-click="vm.selectUnselectFlight($index)" ng-if="flight.isSelected" class="btn btn-default btn-danger" type="button">Unselect</button>
       </div>

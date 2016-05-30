@@ -8,6 +8,6 @@
   _.$inject=['$window'];
   function _ ($window) {
     return $window._;
-  };
+  }
 
 })();

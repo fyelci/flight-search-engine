@@ -1,7 +1,7 @@
 {
   "flights": [
     {
-      "flightNumber": "TK1",
+      "flightNumber": "TK-28",
       "fromAirport": "Istanbul Ataturk",
       "fromAirportCode": "IST",
       "fromAirportCity": "Istanbul",
@@ -17,7 +17,7 @@
       "remainingTickets": 5
     },
     {
-      "flightNumber": "DLT1",
+      "flightNumber": "DLT-198",
       "fromAirport": "New York John F. Kennedy, NY",
       "fromAirportCode": "JFK",
       "fromAirportCity": "New York",
@@ -33,7 +33,7 @@
       "remainingTickets": 9
     },
     {
-      "flightNumber": "DLT18",
+      "flightNumber": "DLT-18",
       "fromAirport": "New York John F. Kennedy, NY",
       "fromAirportCode": "JFK",
       "fromAirportCity": "New York",
@@ -49,7 +49,7 @@
       "remainingTickets": 2
     },
     {
-      "flightNumber": "KLM1",
+      "flightNumber": "KLM-32",
       "fromAirport": "New York John F. Kennedy, NY",
       "fromAirportCode": "JFK",
       "fromAirportCity": "New York",
@@ -65,7 +65,7 @@
       "remainingTickets": 1
     },
     {
-      "flightNumber": "KLM2",
+      "flightNumber": "KLM-27",
       "fromAirport": "Barcelona",
       "fromAirportCode": "BCN",
       "fromAirportCity": "Barcelona",
@@ -81,7 +81,7 @@
       "remainingTickets": 3
     },
     {
-      "flightNumber": "TK34",
+      "flightNumber": "TK-134",
       "fromAirport": "Istanbul Ataturk",
       "fromAirportCode": "IST",
       "fromAirportCity": "Istanbul",
@@ -97,7 +97,7 @@
       "remainingTickets": 30
     },
     {
-      "flightNumber": "TK7",
+      "flightNumber": "TK-72",
       "fromAirport": "Istanbul Ataturk",
       "fromAirportCode": "IST",
       "fromAirportCity": "Istanbul",

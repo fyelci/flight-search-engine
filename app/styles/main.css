@@ -7,7 +7,7 @@
 
 body {
   font-family:'Source Sans Pro', sans-serif;
-  font-size:12px;
+  font-size:11px;
 }
 
 .main-header {
@@ -22,10 +22,12 @@ body {
   border: 1px solid gray;
 }
 
-.filter-direction-selection {
+.main-flight-container div {
   padding: 0px;
-  margin: 10px 0px 0px 15px;
+}
 
+.filter-direction-selection {
+  margin: 10px 0px 0px 15px;
 }
 
 .nav-tabs {
@@ -36,7 +38,6 @@ body {
 
 .filter-bar {
   border-right: 1px solid gray;
-  padding: 0px;
 }
 
 .date-airport-filter {
@@ -51,13 +52,18 @@ body {
   border: 1px solid gray;
 }
 
-.search-results-main {
-  padding: 0px;
+.search-results-main .user-selected-dates{
+  margin-top: 10px;
+  text-align: right;
+  padding-right: 10px !important;
 }
 
 .search-results-header {
   margin: 0px;
-  padding: 0px;
+}
+
+.search-results-header h3 {
+  padding-left: 10px;
 }
 
 .no-results-bar {
@@ -69,8 +75,24 @@ body {
   margin: 10px;
 }
 
-.flight-number {
-  font-size: 10px;
+.result-text-column {
+  padding: 5px 0px 0px 5px !important;
+}
+
+.result-text-column .from-to {
+  font-size: 14px;
+}
+
+.total-price {
+  font-size: 18px;
+  vertical-align: middle;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.select-flight-buttons {
+  margin-top: 30px;
+  font-size: 12px;
 }
 
 /* Responsive: Portrait tablets and up */
