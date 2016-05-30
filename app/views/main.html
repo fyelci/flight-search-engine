@@ -5,7 +5,7 @@
 </div>
 
 <div class="row main-flight-container">
-  <div id="search-fitlers" class="col-md-3 col-sm-6 col-xs-12 filter-bar" >
+  <div id="search-fitlers" class="col-md-3 col-sm-4 col-xs-12 filter-bar" >
     <div class="row filter-direction-selection">
       <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
         <li><a ng-click="vm.directionSelected(false)" href="javascript:void(0)" data-toggle="tab">One way</a></li>
@@ -89,7 +89,7 @@
     </div>
   </div>
 
-  <div id="search-results-main-container" class="col-md-9 col-sm-6 col-xs-12 search-results-main">
+  <div id="search-results-main-container" class="col-md-9 col-sm-8 col-xs-12 search-results-main">
     <div class="row search-results-header">
       <div class="col-xs-6">
         <h3>Your Results</h3>
@@ -103,7 +103,7 @@
       <p>No flight found, please check your filter!</p>
     </div>
     <div class="row result-row" ng-repeat="flight in vm.flightResults" ng-hide="flight.hidedByFilter">
-      <div class="col-md-3 col-sm-3 col-xs-3 center-block">
+      <div class="col-md-3 col-sm-2 col-xs-2 center-block">
         <img class="img-responsive" ng-src="{{flight.departureFlight.companyLogo}}" alt="{{flight.departureFlight.company}}" />
       </div>
       <div class="col-md-2 col-sm-3 col-xs-3 result-text-column">
@@ -120,12 +120,12 @@
         <div class="col-xs-6">Arrive:</div><div class="col-xs-6">{{flight.returnFlight.arrivalDate | date : 'hh:mm a'}}</div>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-3 text-center center-block total-price">
+      <div class="col-md-2 col-sm-1 col-xs-1 text-center center-block total-price">
         {{flight.departureFlight.currency}} {{flight.departureFlight.price + flight.returnFlight.price}}
       </div>
-      <div class="col-md-3 col-sm-3 col-xs-3 text-center center-block select-flight-buttons">
-        <button ng-click="vm.selectUnselectFlight($index)" ng-if="!flight.isSelected" class="btn btn-default btn-primary" type="button">Select This Flight</button>
-        <button ng-click="vm.selectUnselectFlight($index)" ng-if="flight.isSelected" class="btn btn-default btn-danger" type="button">Unselect</button>
+      <div class="col-md-3 col-sm-3 col-xs-2 text-center center-block select-flight-buttons">
+        <button ng-click="vm.selectUnselectFlight($index)" ng-if="!flight.isSelected" class="btn btn-default btn-primary btn-responsive" type="button">Select This Flight</button>
+        <button ng-click="vm.selectUnselectFlight($index)" ng-if="flight.isSelected" class="btn btn-default btn-danger btn-responsive" type="button">Unselect</button>
       </div>
     </div>
   </div>
