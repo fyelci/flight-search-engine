@@ -58,7 +58,7 @@
         }
 
         //Check if return flight is eligible
-        if(flightData.length > 0) {
+        if(flightData.length > 0 && filters.isRoundTrip) {
           for (var i=0; i<data.flights.length; i++) {
             var departureDate = new Date(data.flights[i].departureDate);
 
@@ -68,7 +68,9 @@
               filters.passengerCount <= data.flights[i].remainingTickets) {
 
               for(var j=0; j < flightData.length; j++) {
-                flightData[j].returnFlight = getConvertedObj(data.flights[i]);
+                if(flightData[j].departureFlight.arrivalDate < new Date(data.flights[i].departureDate)) {
+                  flightData[j].returnFlight = getConvertedObj(data.flights[i]);
+                }
               }
             }
           }

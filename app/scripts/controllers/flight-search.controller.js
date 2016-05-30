@@ -43,7 +43,28 @@
         passengerCount: null,
         priceRangeStart: 0,
         priceRangeEnd: 200,
-        isRoundTrip: true
+        isRoundTrip: true,
+        priceSlider : {
+          min: 0,
+          max: 900,
+          options: {
+            floor: 0,
+            ceil: 1000,
+            translate: function(value) {
+              return '£' + value;
+            },
+            onChange: function() {
+              for(var i=0; i<vm.flightResults.length; i++) {
+                var flightPrice = vm.flightResults[i].departureFlight.price + (vm.flightResults[i].returnFlight ? vm.flightResults[i].returnFlight.price : 0);
+                if(flightPrice < vm.filters.priceSlider.min || flightPrice > vm.filters.priceSlider.max) {
+                  vm.flightResults[i].hidedByFilter = true;
+                } else {
+                  vm.flightResults[i].hidedByFilter = false;
+                }
+              }
+            }
+          }
+        }
       };
 
       FlightSearchService.getFromAirportList(function(responseData) {
@@ -83,11 +104,20 @@
       vm.alerts = [];
       filterValidation();
       if(vm.alerts.length > 0) {
+        vm.flightResults = [];
         return;
       }
 
       FlightSearchService.searchFlights(vm.filters, function(responseData) {
         vm.flightResults = responseData;
+        //Calculate price range after search
+        var maxPrice = 0;
+        for(var i=0; i<vm.flightResults.length; i++) {
+          var flightPrice = vm.flightResults[i].departureFlight.price + (vm.flightResults[i].returnFlight ? vm.flightResults[i].returnFlight.price : 0);
+          maxPrice = flightPrice > maxPrice ? flightPrice : maxPrice;
+        }
+        vm.filters.priceSlider.max = maxPrice;
+        vm.filters.priceSlider.options.ceil = maxPrice;
       });
     };
 
@@ -106,6 +136,9 @@
       }
       if(vm.filters.isRoundTrip && !vm.filters.return.date) {
         vm.alerts.push({type: 'warning', msg: 'You should choose return date for return flight!'});
+      }
+      if(vm.filters.isRoundTrip && vm.filters.return.date < vm.filters.departure.date) {
+        vm.alerts.push({type: 'warning', msg: 'Return Date must be equal or higher than departure date!'});
       }
     }
 

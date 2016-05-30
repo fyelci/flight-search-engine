@@ -41,13 +41,13 @@ body {
 }
 
 .date-airport-filter {
-  padding: 5px;
+  padding: 5px !important;
   margin: 1px 5px 5px 5px;
   border: 1px solid gray;
 }
 
 .price-filter {
-  padding: 5px;
+  padding: 10px !important;
   margin: 5px;
   border: 1px solid gray;
 }

@@ -13,7 +13,8 @@
       'ui.router',
       'ngAnimate',
       'ngTouch',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'rzModule'
     ])
     .config(function($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise("/");

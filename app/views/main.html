@@ -81,7 +81,11 @@
 
     </div>
     <div id="price-slider-filter-row" class="row price-filter">
-      Price Filter
+      <rzslider
+        rz-slider-model="vm.filters.priceSlider.min"
+        rz-slider-high="vm.filters.priceSlider.max"
+        rz-slider-options="vm.filters.priceSlider.options"></rzslider>
+
     </div>
   </div>
 
@@ -98,7 +102,7 @@
     <div class="row no-results-bar" ng-if="vm.flightResults.length == 0">
       <p>No flight found, please check your filter!</p>
     </div>
-    <div class="row result-row" ng-repeat="flight in vm.flightResults">
+    <div class="row result-row" ng-repeat="flight in vm.flightResults" ng-hide="flight.hidedByFilter">
       <div class="col-md-3 col-sm-3 col-xs-3 center-block">
         <img class="img-responsive" ng-src="{{flight.departureFlight.companyLogo}}" alt="{{flight.departureFlight.company}}" />
       </div>
